@@ -28,7 +28,7 @@ def redistribute_efficiency(original_df, top_cities, bottom_cities, max_efficien
 
     return adjusted_df
 
-output_dir = "resources/comparative"
+output_dir = "comparative"
 os.makedirs(output_dir, exist_ok=True)
 
 for year in range(2021, 2025):

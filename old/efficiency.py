@@ -36,7 +36,7 @@ for year in range(2021, 2025):
     plt.ylabel('Eficiência')
     plt.title(f"Eficiência por Cidade ({year})")
 
-    output_dir = "resources/efficiency"
+    output_dir = "efficiency"
     os.makedirs(output_dir, exist_ok=True)
     plt.grid(True)
     plt.savefig(f"{output_dir}/efficiency_{year}.pdf", bbox_inches='tight')

@@ -39,7 +39,7 @@ for year in range(2021, 2025):
     plt.grid(True)
     plt.tight_layout()
 
-    output_dir = "resources/ranked"
+    output_dir = "ranked"
     os.makedirs(output_dir, exist_ok=True)
     plt.savefig(f"{output_dir}/ranked_efficiency_{year}.pdf", bbox_inches='tight')
     plt.show()

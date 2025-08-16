@@ -66,7 +66,7 @@ for year in range(2021, 2025):
     plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize='small')
     plt.tight_layout()
     plt.grid(True)
-    os.makedirs("resources/predictions", exist_ok=True)
+    os.makedirs("predictions", exist_ok=True)
     plt.savefig(f"resources/predictions/original_efficiency_{year}.png")
     plt.close()
 

@@ -1,0 +1,82 @@
+{
+  "real": {
+    "top": [
+      {
+        "city": {
+          "id": 260220,
+          "name": "Bom Jardim"
+        },
+        "efficiencies": [
+          {
+            "month": 1,
+            "teamDensity": 32.00256020481638,
+            "coverage": 42000,
+            "coveragePercentage": 112,
+            "productivity": 51186,
+            "efficiency": 1.2187142857142856
+          }
+        ],
+        "avgEfficiency": 1.6301507936507935
+      }
+    ],
+    "down": [
+      {
+        "city": {
+          "id": 260005,
+          "name": "Abreu e Lima"
+        },
+        "efficiencies": [
+          {
+            "month": 1,
+            "teamDensity": 35.546708374804496,
+            "coverage": 121115,
+            "coveragePercentage": 123,
+            "productivity": 18250,
+            "efficiency": 0.15068323494199728
+          }
+        ],
+        "avgEfficiency": 0.21525667350815492
+      }
+    ]
+  },
+  "redistributed": {
+    "top": [
+      {
+        "city": {
+          "id": 260220,
+          "name": "Bom Jardim"
+        },
+        "efficiencies": [
+          {
+            "month": 1,
+            "teamDensity": 32.00256020481638,
+            "coverage": 37800,
+            "coveragePercentage": 100.8,
+            "productivity": 51186,
+            "efficiency": 1.354126984126984
+          }
+        ],
+        "avgEfficiency": 1.811278659611993
+      }
+    ],
+    "down": [
+      {
+        "city": {
+          "id": 260005,
+          "name": "Abreu e Lima"
+        },
+        "efficiencies": [
+          {
+            "month": 1,
+            "teamDensity": 35.546708374804496,
+            "coverage": 133227,
+            "coveragePercentage": 135.3,
+            "productivity": 18250,
+            "efficiency": 0.13698424493533592
+          }
+        ],
+        "avgEfficiency": 0.19568773235620684
+      }
+    ]
+  }
+}
