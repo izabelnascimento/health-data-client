@@ -3,15 +3,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
-BASE_URL = "http://localhost:8080/api/dea/indicators/first-semester/ranked?year={year}"
-YEARS = [2021, 2022, 2023, 2024]
+BASE_URL = "http://localhost:8080/api/dea/indicators/first-semester/ranked?year={year}&rank={rank}"
+YEARS = [2021, 2022, 2023, 2024]   # pode incluir [2021, 2022, 2023, 2024]
 OUTPUT_DIR = "resources/ranked"
+RANK = 5
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 for year in YEARS:
     print(f"Consultando ano {year}...")
-    response = requests.get(BASE_URL.format(year=year))
+    response = requests.get(BASE_URL.format(year=year, rank=RANK))
     response.raise_for_status()
     data = response.json()
     df = pd.DataFrame(data)
@@ -19,7 +20,7 @@ for year in YEARS:
     if "efficiency" not in df.columns:
         raise ValueError(f"O JSON do ano {year} precisa conter o campo 'efficiency'.")
 
-    plt.figure(figsize=(14, 8))
+    plt.figure(figsize=(10, 8))
 
     for city, city_data in df.groupby("cityName"):
         plt.plot(
@@ -37,12 +38,12 @@ for year in YEARS:
 
     handles, labels = plt.gca().get_legend_handles_labels()
 
-    top_handles, top_labels = handles[:5], labels[:5]
-    bottom_handles, bottom_labels = handles[5:], labels[5:]
+    top_handles, top_labels = handles[:RANK], labels[:RANK]
+    bottom_handles, bottom_labels = handles[RANK:], labels[RANK:]
 
     legend1 = plt.legend(
         top_handles, top_labels,
-        title="Top 5",
+        title=f"Top {RANK}",
         loc="upper left",
         bbox_to_anchor=(1.02, 1),
         fontsize=10,
@@ -52,14 +53,16 @@ for year in YEARS:
 
     plt.legend(
         bottom_handles, bottom_labels,
-        title="Bottom 5",
+        title=f"Bottom {RANK}",
         loc="lower left",
         bbox_to_anchor=(1.02, 0),
         fontsize=10,
         title_fontsize=12
     )
 
-    plt.tight_layout()  # espaço para as duas caixas
+    plt.tight_layout()
+    plt.subplots_adjust(right=0.75)
+    plt.xticks([1, 2, 3])
     filename = os.path.join(OUTPUT_DIR, f"efficiency_{year}.png")
     plt.savefig(filename, dpi=300)
     plt.close()
