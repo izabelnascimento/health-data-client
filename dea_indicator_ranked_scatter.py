@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 BASE_URL = "http://localhost:8080/api/dea/indicators/first-semester/ranked?year={year}&rank={rank}"
 YEARS = [2021, 2022, 2023, 2024]
 OUTPUT_DIR = "resources/scatter"
-RANK = 10
+RANK = 30
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
