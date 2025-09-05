@@ -40,7 +40,7 @@ for year in YEARS:
                  fontsize=9, ha="right")
 
     plt.colorbar(scatter, label="Eficiência")
-    plt.xlabel("APS per capita (input)")
+    plt.xlabel("Orçamento da APS per capita (input)")
     plt.ylabel("Produtividade (output)")
     plt.title(f"Dispersão: APS per capita vs Produtividade - 1º Semestre {year}")
     plt.grid(True)
