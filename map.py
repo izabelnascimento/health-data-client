@@ -10,6 +10,8 @@ BASE_URL_CITY = "http://localhost:8080/api/city"
 GEOJSON_FILE = "resources/data/pe.json"
 OUTPUT_FILE = "resources/map/"
 
+cmap = "RdYlGn"
+vmin, vmax = 0, 1
 os.makedirs("resources/map", exist_ok=True)
 
 for year in YEAR:
@@ -33,23 +35,29 @@ for year in YEAR:
 
     merged = geo_df.merge(df_eff, left_on="name", right_on="cityName")
 
-    fig, ax = plt.subplots(1, 1, figsize=(12, 10))
+    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
     merged.plot(
         column="efficiency",
         cmap="RdYlGn",
         linewidth=0.8,
         ax=ax,
         edgecolor="0.8",
-        legend=True,
+        legend=False,
         legend_kwds={"label": "Eficiência DEA", "shrink": 0.6},
         vmin=0,
         vmax=1
     )
 
-    ax.set_title(f"Mapa Temático de Eficiência por Município - {YEAR}", fontsize=14)
+    ax.set_title(f"Eficiência da APS por Município - {year}", fontsize=14)
     ax.axis("off")
 
     plt.tight_layout()
+
+    cbar_ax = fig.add_axes([0.25, 0.92, 0.5, 0.01])
+    sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(vmin=vmin, vmax=vmax))
+    cbar = fig.colorbar(sm, cax=cbar_ax, orientation="horizontal")
+    cbar.set_label("Eficiência DEA", fontsize=11)
+
     filename = os.path.join(OUTPUT_FILE, f"map_{year}.png")
     plt.savefig(filename, dpi=300)
     print(f"✅ Mapa salvo em {OUTPUT_FILE}")
