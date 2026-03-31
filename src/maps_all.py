@@ -5,13 +5,13 @@ import requests
 import os
 from statistics import mode, StatisticsError
 
-YEARS = [2021, 2022, 2023, 2024]
+YEARS = [2021, 2022, 2023, 2024, 2025]
 BASE_URL_EFF = "http://localhost:8080/api/dea/indicators/first-semester/ranked?year={year}&rank=200"
 BASE_URL_CITY = "http://localhost:8080/api/city"
 GEOJSON_FILE = "resources/data/pe.json"
-OUTPUT_FILE = "resources/map/map_stats_text.png"
+OUTPUT_FILE = "resources/v2/map/map_all_years.png"
 
-os.makedirs("resources/map", exist_ok=True)
+os.makedirs("../resources/v1/map", exist_ok=True)
 
 resp_cities = requests.get(BASE_URL_CITY)
 resp_cities.raise_for_status()
@@ -19,7 +19,7 @@ city_map = {str(c["id"]): c["name"].upper() for c in resp_cities.json()}
 
 fig, axes = plt.subplots(len(YEARS), 1, figsize=(12, 20))
 
-cmap = "RdYlGn"
+cmap = "viridis"
 vmin, vmax = 0, 1
 
 if len(YEARS) == 1:
@@ -48,11 +48,11 @@ for i, year in enumerate(YEARS):
         ax=axes[i],
         edgecolor="0.8",
         legend=False,
-        legend_kwds={"label": "Eficiência DEA", "orientation": "horizontal", "shrink": 0.6},
+        legend_kwds={"label": "DEA Efficiency Scale", "orientation": "horizontal", "shrink": 0.6},
         vmin=0,
         vmax=1
     )
-    axes[i].set_title(f"Eficiência por Município - {year}", fontsize=14)
+    axes[i].set_title(f"Efficiency by City {year}", fontsize=14)
     axes[i].axis("off")
 
     mean_val = df_eff["efficiency"].mean()
@@ -62,8 +62,8 @@ for i, year in enumerate(YEARS):
         mode_val = None
 
     stats_text = (
-        f"Média: {mean_val:.2f}\n"
-        f"Moda: {mode_val:.2f}" if isinstance(mode_val, float) else "Moda: N/A"
+        f"Mean: {mean_val:.2f}\n"
+        f"Mode: {mode_val:.2f}" if isinstance(mode_val, float) else "Moda: N/A"
     )
 
     axes[i].text(
@@ -80,7 +80,7 @@ for i, year in enumerate(YEARS):
 cbar_ax = fig.add_axes([0.25, 0.92, 0.5, 0.01])
 sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(vmin=vmin, vmax=vmax))
 cbar = fig.colorbar(sm, cax=cbar_ax, orientation="horizontal")
-cbar.set_label("Eficiência DEA", fontsize=11)
+cbar.set_label("DEA Efficiency", fontsize=11)
 
 plt.tight_layout(rect=[0, 0, 1, 0.9])
 plt.savefig(OUTPUT_FILE, dpi=300)

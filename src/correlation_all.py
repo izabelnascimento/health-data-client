@@ -5,29 +5,29 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 BASE_URL = "http://localhost:8080/api/dea/indicators/first-semester/ranked?year={year}&rank={rank}"
-YEARS = [2021, 2022, 2023, 2024]
-OUTPUT_DIR = "resources/correlation"
+YEARS = [2021, 2022, 2023, 2024, 2025]
+OUTPUT_DIR = "../resources/v2/correlation"
 RANK = 30
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 rename_cols = {
-    "apsPerCapita": "Orçamento APS per capita",
-    "teamsDensity": "Densidade de equipes",
-    "healthCareVisitsPerThousandReais": "Qtd consultas por mil R$",
-    "cobertura": "Cobertura (%)",
-    "productivity": "Produtividade",
-    "efficiency": "Eficiência"
+    "apsPerCapita": "PHC Budget / Capita",
+    "teamsDensity": "Team Density",
+    "healthCareVisitsPerThousandReais": "Health Visits / 1k BRL",
+    "cobertura": "Coverage (%)",
+    "productivity": "Productivity",
+    "efficiency": "Efficiency"
 }
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig, axes = plt.subplots(3, 2, figsize=(16, 14))
 axes = axes.flatten()
 
-cmap = "RdYlGn"
+cmap = "viridis"
 vmin, vmax = -1, 1
 
 for i, year in enumerate(YEARS):
-    print(f"🔎 Consultando ano {year}...")
+    print(f"Consultando ano {year}...")
 
     response = requests.get(BASE_URL.format(year=year, rank=RANK))
     response.raise_for_status()
@@ -52,12 +52,15 @@ for i, year in enumerate(YEARS):
         ax=axes[i],
         cbar=False
     )
-    axes[i].set_title(f"Correlação - {year}", fontsize=14)
+    axes[i].set_title(f"Correlation - {year}", fontsize=14)
+
+for j in range(len(YEARS), len(axes)):
+    fig.delaxes(axes[j])
 
 cbar_ax = fig.add_axes([0.25, 0.94, 0.5, 0.02])
 sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(vmin=vmin, vmax=vmax))
 cbar = fig.colorbar(sm, cax=cbar_ax, orientation="horizontal")
-cbar.set_label("Correlação (inputs, outputs e eficiência)", fontsize=12, labelpad=6)
+cbar.set_label("Correlation (inputs, outputs and efficiency)", fontsize=12, labelpad=6)
 
 plt.tight_layout(rect=[0, 0, 1, 0.88])
 

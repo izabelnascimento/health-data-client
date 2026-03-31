@@ -7,12 +7,12 @@ import matplotlib.pyplot as plt
 YEAR = [2021, 2022, 2023, 2024]
 BASE_URL_EFF = "http://localhost:8080/api/dea/indicators/first-semester/ranked?year={year}&rank=200"
 BASE_URL_CITY = "http://localhost:8080/api/city"
-GEOJSON_FILE = "resources/data/pe.json"
-OUTPUT_FILE = "resources/map/"
+GEOJSON_FILE = "../resources/data/pe.json"
+OUTPUT_FILE = "../resources/v1/map/"
 
 cmap = "RdYlGn"
 vmin, vmax = 0, 1
-os.makedirs("resources/map", exist_ok=True)
+os.makedirs("../resources/v1/map", exist_ok=True)
 
 for year in YEAR:
     print("Buscando lista de cidades...")
