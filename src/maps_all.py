@@ -52,7 +52,7 @@ for i, year in enumerate(YEARS):
         vmin=0,
         vmax=1
     )
-    axes[i].set_title(f"Efficiency by City {year}", fontsize=14)
+    axes[i].set_title(f"Efficiency by City in {year}", fontsize=20)
     axes[i].axis("off")
 
     mean_val = df_eff["efficiency"].mean()
@@ -69,7 +69,7 @@ for i, year in enumerate(YEARS):
     axes[i].text(
         0.02, 0.05, stats_text,
         transform=axes[i].transAxes,
-        fontsize=13,
+        fontsize=20,
         fontweight="bold",
         va="bottom",
         ha="left",
@@ -80,7 +80,8 @@ for i, year in enumerate(YEARS):
 cbar_ax = fig.add_axes([0.25, 0.92, 0.5, 0.01])
 sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(vmin=vmin, vmax=vmax))
 cbar = fig.colorbar(sm, cax=cbar_ax, orientation="horizontal")
-cbar.set_label("DEA Efficiency", fontsize=11)
+cbar.set_label("DEA Efficiency", fontsize=20)
+cbar.ax.tick_params(labelsize=12)
 
 plt.tight_layout(rect=[0, 0, 1, 0.9])
 plt.savefig(OUTPUT_FILE, dpi=300)

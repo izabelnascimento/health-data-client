@@ -5,7 +5,11 @@ import matplotlib.pyplot as plt
 
 BASE_URL = "http://localhost:8080/api/dea/indicators/first-semester/ranked?year={year}&rank={rank}"
 YEARS = [2021, 2022, 2023, 2024, 2025]
-OUTPUT_DIR = "resources/v2/scatter"
+# Caminho ancorado na localização do próprio script (não na pasta de onde ele
+# é executado), para sempre salvar na pasta resources/ que já existe na raiz
+# do projeto, mesmo se o script for rodado de dentro de src/.
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_DIR = os.path.join(SCRIPT_DIR, "..", "resources", "v2", "scatter")
 RANK = 30
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -41,14 +45,18 @@ for year in YEARS:
             row["apsPerCapita"],
             row["productivity"],
             row["cityName"],
-            fontsize=9,
+            fontsize=20,
             ha="right"
         )
 
-    plt.colorbar(scatter, label="Efficiency")
-    plt.xlabel("PHC Budget per Capita (Input)")
-    plt.ylabel("Productivity (Output)")
-    plt.title(f"Scatter Plot: PHC Budget per Capita vs Productivity - 1st Semester {year}")
+    cbar = plt.colorbar(scatter, label="Efficiency")
+    cbar.set_label("Efficiency", fontsize=15)
+    cbar.ax.tick_params(labelsize=15)
+    plt.xlabel("PHC Budget per Capita (Input)", fontsize=20)
+    plt.ylabel("Productivity (Output)", fontsize=20)
+    plt.title(f"Scatter Plot: PHC Budget per Capita vs Productivity - 1st Semester {year}", fontsize=15)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
     plt.grid(True)
     plt.tight_layout()
 
